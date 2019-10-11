@@ -8,8 +8,7 @@ module.exports = {
       passowrd: Sequelize.STRING
     });
   },
-  // eslint-disable-next-line no-unused-vars
-  down(queryInterface, _Sequalize) {
+  down(queryInterface) {
     return queryInterface.dropTable('Users');
   }
 };
