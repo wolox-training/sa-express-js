@@ -8,3 +8,6 @@ exports.databaseError = message => internalError(message, exports.DATABASE_ERROR
 
 exports.DEFAULT_ERROR = 'default_error';
 exports.defaultError = message => internalError(message, exports.DEFAULT_ERROR);
+
+exports.VALIDATIONS_ERROR = 'validation_error';
+exports.validationsError = message => internalError(message, exports.VALIDATIONS_ERROR);
