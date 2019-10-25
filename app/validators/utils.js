@@ -1,3 +1,4 @@
+const { logger } = require('express-wolox-logger');
 const { validationResult } = require('express-validator');
 const { validationsError } = require('../errors');
 
@@ -6,6 +7,7 @@ const defaultErrorHandler = (req, res, next) => {
   if (errors.isEmpty()) {
     next();
   } else {
+    logger.error('Errors: ', errors.errors);
     next(validationsError(errors.errors));
   }
 };
