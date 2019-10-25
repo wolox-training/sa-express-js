@@ -6,5 +6,8 @@ module.exports = {
       queryInterface.removeColumn('users', 'created_at'),
       queryInterface.removeColumn('users', 'updated_at')
     ]);
+  },
+  down() {
+    return Promise.resolve();
   }
 };

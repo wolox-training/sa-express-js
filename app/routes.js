@@ -11,8 +11,4 @@ exports.init = app => {
   app.get('/albums/:id/photos', [], getAlbumPhotos);
 
   app.post('/users', userValidator, createUser);
-
-  // app.get('/endpoint/get/path', validateBla, controller.methodGET);
-  // app.put('/endpoint/put/path', [], controller.methodPUT);
-  // app.post('/endpoint/post/path', [], controller.methodPOST);
 };
