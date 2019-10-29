@@ -8,7 +8,7 @@ exports.createUser = (req, res) => {
       res.status(201).send(user);
     })
     .catch(err => {
-      logger.error('The user could not be created and returned this error: ', err);
+      logger.error('Something happened ', err);
       res.status(500).send(err);
     });
 };
