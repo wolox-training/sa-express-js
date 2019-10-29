@@ -3,7 +3,7 @@ const { healthCheck } = require('./controllers/healthCheck');
 const { getAlbum, getAlbumPhotos } = require('./controllers/albums');
 const { createUser } = require('./controllers/users');
 
-const { userValidator } = require('./validators/user');
+const { userValidator } = require('./middlewares/user');
 
 exports.init = app => {
   app.get('/health', healthCheck);
