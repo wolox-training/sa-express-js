@@ -2,8 +2,6 @@ const request = require('supertest');
 const app = require('../../app');
 const { users: User } = require('../../app/models');
 
-let params = {};
-
 const createRequest = requestParams =>
   request(app)
     .post('/users')
@@ -11,77 +9,74 @@ const createRequest = requestParams =>
 
 describe('Create user', () => {
   describe('when the params are OK', () => {
-    params = {
-      first_name: 'Petito',
+    const params = {
+      first_name: 'PetitoOK',
       last_name: 'Petapasdasdeta',
-      email: 'lalaaasdasdasdaaaaaala@wolox.com.ar',
+      email: 'lalaaasdasdasdaaaOK@wolox.com.ar',
       password: 'asdasd123123123'
     };
-    const res = createRequest(params);
 
     it('creates a new user', async () => {
-      await res;
+      await createRequest(params);
       User.findAndCountAll().then(userCount => {
         expect(userCount.count).toEqual(1);
       });
     });
 
     it('returns 201 status', async () => {
-      const response = await res;
+      const response = await createRequest(params);
       expect(response.statusCode).toEqual(201);
     });
   });
 
   describe('when the params are not OK', () => {
     describe('one field required field is missing', () => {
-      params = {
+      const params = {
         first_name: 'Petito',
         email: 'lalaaasdasdasdaaaaaala@wolox.com.ar',
         password: 'asdasd123123123'
       };
-      const res = createRequest(params);
 
       it('does not create a new user', async () => {
-        await res;
+        await createRequest(params);
         User.findAndCountAll().then(userCount => {
           expect(userCount.count).toEqual(0);
         });
       });
 
       it('returns 400 status', async () => {
-        const response = await res;
+        const response = await createRequest(params);
         expect(response.statusCode).toEqual(400);
       });
 
       it('last name has errors', async () => {
-        const response = await res;
+        const response = await createRequest(params);
         expect(JSON.parse(response.text).message[0].param).toEqual('last_name');
       });
     });
 
     describe('password has less than 8 characters', () => {
-      params = {
+      const params = {
         first_name: 'Petito',
         last_name: 'Petito',
         email: 'lalaaasdasdasdaaaaaala@wolox.com.ar',
         password: 'asd'
       };
-      const res = createRequest(params);
 
       it('does not create a new user', async () => {
-        await res;
+        await createRequest(params);
         User.findAndCountAll().then(userCount => {
           expect(userCount.count).toEqual(0);
         });
       });
 
       it('returns 400 status', async () => {
-        const response = await res;
+        const response = await createRequest(params);
         expect(response.statusCode).toEqual(400);
       });
 
       it('password has errors', async () => {
-        const response = await res;
+        const response = await createRequest(params);
         expect(JSON.parse(response.text).message[0].param).toEqual('password');
       });
     });
