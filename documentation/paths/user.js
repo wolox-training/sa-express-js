@@ -37,15 +37,37 @@ module.exports = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/CreateUser'
+            },
+            example: {
+              first_name: 'Petito',
+              last_name: 'asd',
+              email: 'peatitoaasd@wolox.com.ar',
+              password: 'asdasd123123123'
             }
           }
         },
         required: true
       },
       responses: {
-        200: {
-          description: 'New user was created'
+        201: {
+          description: 'User created',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UserCreated'
+              },
+              example: {
+                id: 13,
+                first_name: 'Petito',
+                last_name: 'asd',
+                email: 'peatitoaasd@wolox.com.ar',
+                password: '$2b$08$3gJGJZqQ69lsokVONyR2h.EJ./DMnylE65UZCjtMKb.iJDfTgJlqG',
+                updatedAt: '2019-10-30T17:55:53.706Z',
+                createdAt: '2019-10-30T17:55:53.706Z'
+              }
+            }
+          }
         },
         400: {
           description: 'Invalid parameters',
@@ -55,8 +77,15 @@ module.exports = {
                 $ref: '#/components/schemas/Error'
               },
               example: {
-                message: 'User´s email already exists',
-                internal_code: 'invalid_parameters'
+                message: [
+                  {
+                    value: 'peta.alcala@wolox.com.ar',
+                    msg: 'E-mail already in use',
+                    param: 'email',
+                    location: 'body'
+                  }
+                ],
+                internal_code: 'validation_error'
               }
             }
           }
