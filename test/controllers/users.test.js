@@ -33,28 +33,57 @@ describe('Create user', () => {
   });
 
   describe('when the params are not OK', () => {
-    params = {
-      first_name: 'Petito',
-      email: 'lalaaasdasdasdaaaaaala@wolox.com.aasdjaksd',
-      password: 'asdasd123123123'
-    };
-    const res = createRequest(params);
+    describe('one field required field is missing', () => {
+      params = {
+        first_name: 'Petito',
+        email: 'lalaaasdasdasdaaaaaala@wolox.com.aasdjaksd',
+        password: 'asdasd123123123'
+      };
+      const res = createRequest(params);
 
-    it('does not create a new user', async () => {
-      await res;
-      User.findAndCountAll().then(userCount => {
-        expect(userCount.count).toEqual(0);
+      it('does not create a new user', async () => {
+        await res;
+        User.findAndCountAll().then(userCount => {
+          expect(userCount.count).toEqual(0);
+        });
+      });
+
+      it('returns 400 status', async () => {
+        const response = await res;
+        expect(response.statusCode).toEqual(400);
+      });
+
+      it('last name has errors', async () => {
+        const response = await res;
+        expect(JSON.parse(response.text).message[0].param).toEqual('last_name');
       });
     });
 
-    it('returns 400 status', async () => {
-      const response = await res;
-      expect(response.statusCode).toEqual(400);
-    });
+    describe('password has less than 8 characters', () => {
+      params = {
+        first_name: 'Petito',
+        last_name: 'Petito',
+        email: 'lalaaasdasdasdaaaaaala@wolox.com.aasdjaksd',
+        password: 'asd'
+      };
+      const res = createRequest(params);
 
-    it('last name has errors', async () => {
-      const response = await res;
-      expect(JSON.parse(response.text).message[0].param).toEqual('last_name');
+      it('does not create a new user', async () => {
+        await res;
+        User.findAndCountAll().then(userCount => {
+          expect(userCount.count).toEqual(0);
+        });
+      });
+
+      it('returns 400 status', async () => {
+        const response = await res;
+        expect(response.statusCode).toEqual(400);
+      });
+
+      it('password has errors', async () => {
+        const response = await res;
+        expect(JSON.parse(response.text).message[0].param).toEqual('password');
+      });
     });
   });
 });
