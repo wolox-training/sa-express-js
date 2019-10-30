@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       password: { type: DataTypes.STRING, allowNull: false }
     },
     {
-      timestamps: false,
+      timestamps: true,
+      underscored: true,
       hooks: {
         beforeCreate: user => {
           user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8), null);
