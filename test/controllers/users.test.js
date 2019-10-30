@@ -14,7 +14,7 @@ describe('Create user', () => {
     params = {
       first_name: 'Petito',
       last_name: 'Petapasdasdeta',
-      email: 'lalaaasdasdasdaaaaaala@wolox.com.aasdjaksd',
+      email: 'lalaaasdasdasdaaaaaala@wolox.com.ar',
       password: 'asdasd123123123'
     };
     const res = createRequest(params);
@@ -36,7 +36,7 @@ describe('Create user', () => {
     describe('one field required field is missing', () => {
       params = {
         first_name: 'Petito',
-        email: 'lalaaasdasdasdaaaaaala@wolox.com.aasdjaksd',
+        email: 'lalaaasdasdasdaaaaaala@wolox.com.ar',
         password: 'asdasd123123123'
       };
       const res = createRequest(params);
@@ -63,7 +63,7 @@ describe('Create user', () => {
       params = {
         first_name: 'Petito',
         last_name: 'Petito',
-        email: 'lalaaasdasdasdaaaaaala@wolox.com.aasdjaksd',
+        email: 'lalaaasdasdasdaaaaaala@wolox.com.ar',
         password: 'asd'
       };
       const res = createRequest(params);
